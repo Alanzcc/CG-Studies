@@ -1,9 +1,10 @@
+
 #include <iostream>
 #include <cmath>
 #define SDL_MAIN_HANDLED
 #include "SDL.h"
 
-
+// Tarefa 1:  
 // intersectionPoint = initialPoint + direction * tInt
 // ||intersectionPoint - center||^2 = radius^2
 // ||initialPoint + direction * tInt - center||^2 = radius^2
@@ -148,13 +149,8 @@ public:
 // The Sphere's center must be at z < -(windowDistance + radius)
 // gl_CLEAR_COLOR(100, 100, 100)
 
-//
-
-
 int main()
 {
-
-
     double origin[3] = { 0, 0, 0 };
     int windowDistance = 300;
     int windowWidth = 1280;
@@ -191,9 +187,6 @@ int main()
         SDL_Quit();
         return 1;
     }
-
-
-
 
     Canvas canvas(windowWidth, windowHeight, windowDistance, numLines, numColumns);
     
