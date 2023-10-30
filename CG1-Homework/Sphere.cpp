@@ -13,9 +13,9 @@ Sphere::Sphere(double radius, std::vector<double> center, std::vector<double> am
                     this->specularExponent = specularExponent;
                 }
 
-std::optional<std::vector<double>> doesItIntercept()
+std::optional<std::vector<double>> doesItIntercept(Ray Ray)
 {
-    std::vector<double> w = {Ray.initialPoint[0] - center[0], Ray.initialPoint[1] - center[1], Ray.initialPoint[2] - center[2]};
+    std::vector<double> w = minusVectors(Ray.initialPoint, center);
     double b = dotProduct(w, Ray.direction);
     double c = dotProduct(w, w) - this->radius * this->radius;
     double delta = b * b - 4 * c;
@@ -31,7 +31,7 @@ std::optional<std::vector<double>> doesItIntercept()
     return intersectionPoint;
 }
 
-std::vector<double> ilumination(Ray Ray, intensity)
+std::vector<double> ilumination(Ray Ray, std::vector<double> intensity) // Still need to ready intensity
 {
     std::vector<double> interPoint = doesItIntercept();
     

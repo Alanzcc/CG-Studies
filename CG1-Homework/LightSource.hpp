@@ -4,7 +4,12 @@
 #include "Ray.hpp"
 #include <vector>
 
-std::vector<double> intensity;
+class LightSource
+{
+    public:
+        std::vector<double> intensity;
 
-
+        LightSource(std::vector<double> intensity);
+        
+}
 #endif

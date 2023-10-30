@@ -1,5 +1,5 @@
-#ifndef Ray_H
-#define Ray_H
+#ifndef Ray_HPP
+#define Ray_HPP
 #include <vector>
 
 class Ray
