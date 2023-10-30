@@ -56,16 +56,15 @@
 
     // fD é o 'Fator de difusão'
     // fD = (l . n)
-    // I_d =( I_F@K) * fD
+    // I_d =( I_F@K_d) * fD
 
     // fE é o 'Fator de especularidade'
     // fE = (r . v)^m
-    // I_e = (I_F@K) * fE
+    // I_e = (I_F@K_e) * fE
 
     // I_F = (0.7, 0.7, 0.7)  Intensidade da fonte pontual
     // P_F = (0, 5, 0)  Posição da fonte pontual situada a 5 metros acima do olho do observador.
 
-    // K = (0.5, 0.5, 0.5)  Coeficiente de reflexão da superfície da esfera
 
     // Light = I@K
 
