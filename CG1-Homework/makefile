@@ -9,14 +9,26 @@ TARGET = RemakeV1
 
 all: $(TARGET)
 
-$(TARGET): RemakeV1.o vec3Math.o
-	$(CC) $(CFLAGS) -o $(TARGET) RemakeV1.o vec3Math.o
+$(TARGET): RemakeV1.o Canvas.o Sphere.o Ray.o vec3Math.o
+	$(CC) $(CFLAGS) -o $(TARGET) RemakeV1.o Canvas.o Sphere.o Ray.o vec3Math.o
 
-RemakeV1.o: RemakeV1.cpp vec3Math.hpp
+RemakeV1.o: RemakeV1.cpp Canvas.hpp Sphere.hpp Ray.hpp
 	$(CC) $(CFLAGS) -c RemakeV1.cpp
+
+Canvas.o: Canvas.cpp Canvas.hpp Sphere.hpp Ray.hpp
+	$(CC) $(CFLAGS) -c Canvas.cpp
+
+Sphere.o: Sphere.cpp Sphere.hpp Ray.hpp vec3Math.hpp
+	$(CC) $(CFLAGS) -c Sphere.cpp
+
+Ray.o: Ray.cpp Ray.hpp vec3Math.hpp
+	$(CC) $(CFLAGS) -c Ray.cpp
 
 vec3Math.o: vec3Math.cpp vec3Math.hpp
 	$(CC) $(CFLAGS) -c vec3Math.cpp
+
+#Matrix.o: Matrix.cpp Matrix.hpp
+#	$(CC) $(CFLAGS) -c Matrix.cpp
 
 clean:
 	$(RM) $(TARGET) *.o *~

@@ -1,6 +1,7 @@
 #ifndef Ray_HPP
 #define Ray_HPP
 #include <vector>
+#include "vec3Math.hpp"
 
 class Ray
 {
