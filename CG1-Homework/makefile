@@ -5,15 +5,14 @@ CC = clang++
 CFLAGS = -Wall -std=c++17
 
 # The build target executable
-TARGET = RemakeV1
+TARGET = main
 
 all: $(TARGET)
 
-$(TARGET): RemakeV1.o Canvas.o Sphere.o Ray.o vec3Math.o
-	$(CC) $(CFLAGS) -o $(TARGET) RemakeV1.o Canvas.o Sphere.o Ray.o vec3Math.o
-
-RemakeV1.o: RemakeV1.cpp Canvas.hpp Sphere.hpp Ray.hpp
-	$(CC) $(CFLAGS) -c RemakeV1.cpp
+$(TARGET): main.o Canvas.o Sphere.o Ray.o vec3Math.o
+	$(CC) $(CFLAGS) -o $(TARGET) main.o Canvas.o Sphere.o Ray.o vec3Math.o
+ main.o: main.cpp Canvas.hpp Sphere.hpp Ray.hpp
+	$(CC) $(CFLAGS) -c main.cpp
 
 Canvas.o: Canvas.cpp Canvas.hpp Sphere.hpp Ray.hpp
 	$(CC) $(CFLAGS) -c Canvas.cpp
@@ -37,11 +36,11 @@ clean:
 
 # CFLAGS = -Wall -std=c++11: These are the flags that will be passed to the compiler. -Wall enables all warnings and -std=c++11 sets the language standard to C++11.
 
-# TARGET = RemakeV1: This is the name of the final executable that will be created.
+# TARGET = main: This is the name of the final executable that will be created.
 
-# all: $(TARGET): This is a target that depends on $(TARGET). When you run make or make all, it will build the $(TARGET) (in this case, RemakeV1).
-# $(TARGET): RemakeV1.o vec3Math.o: This line tells make how to build $(TARGET) from RemakeV1.o and vec3Math.o.
+# all: $(TARGET): This is a target that depends on $(TARGET). When you run make or make all, it will build the $(TARGET) (in this case, main).
+# $(TARGET): main.o vec3Math.o: This line tells make how to build $(TARGET) from main.o and vec3Math.o.
 
-# RemakeV1.o: RemakeV1.cpp vec3Math.hpp and vec3Math.o: vec3Math.cpp vec3Math.hpp: These lines tell make how to build the .o files from your .cpp and .hpp files.
+# main.o: main.cpp vec3Math.hpp and vec3Math.o: vec3Math.cpp vec3Math.hpp: These lines tell make how to build the .o files from your .cpp and .hpp files.
 
 # clean:: This is a phony target (it’s not a file name), which is a command for cleaning up your build. Running make clean will remove the executable and all .o files.
