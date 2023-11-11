@@ -6,12 +6,14 @@ CFLAGS = -Wall -std=c++17
 
 # The build target executable
 TARGET = main
+TARGET = main
 
 all: $(TARGET)
 
 $(TARGET): main.o Canvas.o Sphere.o Ray.o vec3Math.o
 	$(CC) $(CFLAGS) -o $(TARGET) main.o Canvas.o Sphere.o Ray.o vec3Math.o
- main.o: main.cpp Canvas.hpp Sphere.hpp Ray.hpp
+
+main.o: main.cpp Canvas.hpp Sphere.hpp Ray.hpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 Canvas.o: Canvas.cpp Canvas.hpp Sphere.hpp Ray.hpp
