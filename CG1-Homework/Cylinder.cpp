@@ -10,21 +10,17 @@ Cylinder::Cylinder(double radius, double height, std::vector<double> ambientRefl
     this->specularExponent = specularExponent;
     this->centerTop = centerTop;
     this->centerBottom = centerBottom;
+    this->axis = normalize(minusVectors(centerTop, centerBottom));
 }
 
-std::vector<double> Cylinder::calculateU() const {
-    std::vector<double> u = minusVectors(centerTop, centerBottom);
-    return normalize(u);
-}
 
 std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray){
-    //calcular u
-    std::vector<double> u = calculateU();
+    
     //calcular v e w 
     // v = (Po - B) - ((Po - B) . u)u
-    std::vector<double> v = minusVectors(minusVectors(Ray.initialPoint, centerBottom), multiplyByScalar(u, dotProduct(minusVectors(Ray.initialPoint, centerBottom), u)));
+    std::vector<double> v = minusVectors(minusVectors(Ray.initialPoint, centerBottom), multiplyByScalar(axis, dotProduct(minusVectors(Ray.initialPoint, centerBottom), axis)));
     // w = d - (d. u)u
-    std::vector<double> w = minusVectors(Ray.direction, multiplyByScalar(u, dotProduct(Ray.direction, u)));
+    std::vector<double> w = minusVectors(Ray.direction, multiplyByScalar(axis, dotProduct(Ray.direction, axis)));
     
     //coeficientes da equação quadrática
     double a = dotProduct(w, w);
@@ -49,8 +45,8 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray){
     //verificar se a interseção está dentro do cilindro 
     // 0 <= (P - B) . u <= height
     
-    double height_u1 = dotProduct(minusVectors(intersection1, centerBottom), u);
-    double height_u2 = dotProduct(minusVectors(intersection2, centerBottom), u);
+    double height_u1 = dotProduct(minusVectors(intersection1, centerBottom), axis);
+    double height_u2 = dotProduct(minusVectors(intersection2, centerBottom), axis);
 
      if ((height_u1 >= 0.0 && height_u1 <= height) || (height_u2 >= 0.0 && height_u2 <= height)) {
         return (height_u1 >= 0.0 && height_u1 <= height) ? intersection1 : intersection2;  // Retorna o ponto de interseção válido
