@@ -6,7 +6,6 @@ CFLAGS = -Wall -std=c++17
 
 # The build target executable
 TARGET = main
-TARGET = main
 
 all: $(TARGET)
 
