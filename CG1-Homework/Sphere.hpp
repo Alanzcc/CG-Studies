@@ -1,28 +1,19 @@
 #ifndef Sphere_HPP
 #define Sphere_HPP
 
-#include <cmath>
-#include <vector>
-#include <optional>
-#include <algorithm>
-#include "vec3Math.hpp"
-#include "Ray.hpp"
+#include "Object.hpp"
 
-class Sphere
+class Sphere : public Object 
 {
     public:
         double radius;
         std::vector<double> center;
-        std::vector<double> ambientReflex;
-        std::vector<double> diffuseReflex;
-        std::vector<double> specularReflex;
-        int specularExponent;
-        
-        Sphere(double radius, std::vector<double> center, std::vector<double> ambientReflex,
-        std::vector<double> diffuseReflex, std::vector<double> specularReflex,
-        int specularExponent);
 
-        std::optional<std::vector<double>> doesItIntercept(Ray Ray); 
+        Sphere(double radius, std::vector<double> center, std::vector<double> ambientReflex,
+               std::vector<double> diffuseReflex, std::vector<double> specularReflex,
+               int shininess);
+
+        std::optional<std::vector<double>> doesItIntercept(Ray Ray);
         std::vector<double> Illumination(Ray Ray, std::vector<double> intensity);
 };
 
