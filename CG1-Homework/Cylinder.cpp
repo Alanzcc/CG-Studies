@@ -17,7 +17,7 @@ Cylinder::Cylinder(double radius, double height, std::vector<double> ambientRefl
 std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
     
     //guardar os pontos de interseção válidos
-    std::vector<std::vector<double>> validIntersections;
+    //std::vector<std::vector<double>> validIntersections;
     //calcular v e w 
     // v = (Po - B) - ((Po - B) . u)u
     std::vector<double> v = minusVectors(minusVectors(Ray.initialPoint, centerBottom), multiplyByScalar(axis, dotProduct(minusVectors(Ray.initialPoint, centerBottom), axis)));
@@ -44,23 +44,35 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
 
         //verificar se a interseção está dentro do cilindro 
         // 0 <= (P - B) . u <= height
-    
+        double minT = std::numeric_limits<double>::infinity();
+        std::vector<double> closestInterception;
         double intersection1_projection = dotProduct(minusVectors(intersection1, centerBottom), axis);
         double intersection2_projection = dotProduct(minusVectors(intersection2, centerBottom), axis);
 
         if(intersection1_projection >= 0 && intersection1_projection <= height){
-            validIntersections.push_back(intersection1);
+            if (t1 < minT) {
+                minT = t1;
+                closestInterception = intersection1;
+            }
+            closestInterception = intersection1;
         }
 
         if(intersection2_projection >= 0 && intersection2_projection <= height){
-            validIntersections.push_back(intersection2);
+            if(t2 < minT){
+                minT = t2;
+                closestInterception = intersection2;
+            }
         }
 
     //ver se interceptou o topo
-    //ver se interceptou a base
-    //guardar em valid Intersections
-    //retornar o menor
-   
+    //ver se interceptou a base e ir atualizando minT se t for menor 
+
+    //verificar se há interseções válidas
+    //se minT ainda é igual a infinito, não há interseção
+    if (minT == std::numeric_limits<double>::infinity()){
+        return std::nullopt;    
     }
+
+    return closestInterception;
 }
 
