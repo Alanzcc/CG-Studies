@@ -1,7 +1,7 @@
 #include "Cylinder.hpp"
 
 
-Cylinder::Cylinder(double radius, double height, std::vector<double> ambientReflex, std::vector <double> diffuseReflex, std::vector <double> specularReflex, int specularExponent, std::vector<double> centerTop, std::vector<double> centerBottom) {
+Cylinder::Cylinder(double radius, double height, std::vector<double> ambientReflex, std::vector <double> diffuseReflex, std::vector <double> specularReflex, int specularExponent, std::vector<double> centerTop, std::vector<double> centerBottom, int shininess) {
     this->radius = radius;
     this->height = height;
     this->ambientReflex = ambientReflex;
@@ -11,6 +11,7 @@ Cylinder::Cylinder(double radius, double height, std::vector<double> ambientRefl
     this->centerTop = centerTop;
     this->centerBottom = centerBottom;
     this->axis = normalize(minusVectors(centerTop, centerBottom));
+    this->shininess = shininess;
 }
 
 
@@ -75,4 +76,35 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
 
     return closestInterception;
 }
+}
 
+std::vector<double> Cylinder::Illumination(Ray Ray, std::vector<double> intensity)
+{
+    std::vector<double> illumination;
+    std::vector<double> interPoint = doesItIntercept(Ray).value_or(std::vector<double>(3, -2));
+    if (interPoint[0] != -2)
+    {
+        std::vector<double> light = normalize(minusVectors(Ray.initialPoint, interPoint));
+
+        std::vector<double> normal = normalize(divideByScalar(axis, this->radius));
+
+    std::vector<double> reflected = minusVectors(multiplyByScalar(normal, 2 * dotProduct(light, normal)), light);
+
+        std::vector<double> vision = multiplyByScalar(normalize(minusVectors(interPoint, Ray.initialPoint)), -1); // While cam = ray_source
+
+        double diffusionFactor = dotProduct(light, normal);
+        double specularFactor = pow(dotProduct(reflected, vision), this->shininess);
+
+        std::vector<double> ambientIllumination = multiplyVectors(intensity, this->ambientReflex);
+        std::vector<double> diffusionIllumination = multiplyByScalar(multiplyVectors(intensity, this->diffuseReflex), diffusionFactor);
+        std::vector<double> specularIllumination = multiplyByScalar(multiplyVectors(intensity, this->specularReflex), specularFactor);
+
+        illumination = plusVectors(ambientIllumination, plusVectors(diffusionIllumination, specularIllumination));
+    }
+    else
+    {
+        illumination.resize(3, -2);
+    }
+
+    return illumination;
+}
