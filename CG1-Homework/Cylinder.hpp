@@ -22,8 +22,9 @@ class Cylinder
         std::vector<double> centerTop;
         std::vector<double> centerBottom;
         std::vector<double> axis;
+        int shininess;
 
-        Cylinder(double radius, double height, std::vector<double> ambientReflex, std::vector<double> diffuseReflex, std::vector<double> specularReflex, int specularExponent, std::vector<double> centerTop, std::vector<double> centerBottom);
+        Cylinder(double radius, double height, std::vector<double> ambientReflex, std::vector<double> diffuseReflex, std::vector<double> specularReflex, int specularExponent, std::vector<double> centerTop, std::vector<double> centerBottom, int shininess);
 
         std::optional<std::vector<double>> doesItIntercept(Ray Ray);
         std::vector<double> Illumination(Ray Ray, std::vector<double> intensity);
