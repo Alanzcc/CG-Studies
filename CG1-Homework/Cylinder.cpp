@@ -108,3 +108,4 @@ std::vector<double> Cylinder::Illumination(Ray Ray, std::vector<double> intensit
 
     return illumination;
 }
+*/
