@@ -14,7 +14,7 @@ Canvas::Canvas(int windowWidth, int windowHeight, int windowDistance,
     this->windowMaxY = windowHeight / 2;
 }
 
-std::vector<std::vector<std::vector<double>>> Canvas::Raycast(Sphere Sphere, std::vector<double> lightSource, std::vector<double> intensity)
+std::vector<std::vector<std::vector<double>>> Canvas::Raycast(Object* object, std::vector<double> lightSource, std::vector<double> intensity)
 {
     double pixelColumn, pixelLine;
     std::vector<double> illuminated;
@@ -31,12 +31,11 @@ std::vector<std::vector<std::vector<double>>> Canvas::Raycast(Sphere Sphere, std
             windowPoint.push_back(pixelLine);
             windowPoint.push_back((double)-windowDistance);
             Ray Ray(lightSource, windowPoint);
-            illuminated = Sphere.Illumination(Ray, intensity);
+            illuminated = object->Illumination(Ray, intensity);
             if (illuminated[0] != -2)
             {
-                painting[l][c][0] = illuminated[0];
-                painting[l][c][1] = illuminated[1];
-                painting[l][c][2] = illuminated[2];
+                painting[l][c] = illuminated;
+              
                 //SDL usa valores de 0 a 255 para cores
             }
         }

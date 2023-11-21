@@ -1,4 +1,4 @@
-#include "Cylinder.hpp"
+/* #include "Cylinder.hpp"
 
 
 Cylinder::Cylinder(double radius, double height, std::vector<double> ambientReflex, std::vector <double> diffuseReflex, std::vector <double> specularReflex, int specularExponent, std::vector<double> centerTop, std::vector<double> centerBottom) {
@@ -54,3 +54,4 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray){
     return std::nullopt; //sem interseção válida
 
 }
+*/

@@ -1,40 +1,19 @@
-#include "Matrix2D.hpp"
-using namespace std;
-
-class Matrix
-{
-    
-    public:
-        int lines, columns;
-        vector<vector<double>> matrix; 
-        
-        Matrix(int lines, int columns) {
-
-            vector<vector<double>> matrix(lines, vector<double>(columns));
-            this->matrix = matrix;
-
-            //print matrix
-            for(int i = 0; i<lines; i++)
-            {
-                for(int j = 0; j<columns; j++)
-                {
-                    cout << matrix[i][j] << " ";
-                }
-                cout << endl;
-            }
-        };
-};
+#include <iostream>
+#include <vector>
+#include "vec3Math.hpp"
 
 int main()
 {
-    Matrix Matriz(5, 12);
-    for(int i = 0; i<lines; i++)
-        {
-            for(int j = 0; j<columns; j++)
-            {
-                cout << matrix[i][j] << " ";
-            }
-            cout << endl;
-        }
+    std::vector<double> center = {0, 0, -700};
+    std::vector<double> normal = {0, 0, 1};
+    
+    double N5 = dotProduct(minusVectors(A, B), A);
+    double N6 = dotProduct(multiplyByScalar(A, 2), B);
+    double N7 = dotProduct(crossProduct(A, B), B);
+   
+    
+
+    std::cout << N << " "<< N2 << " " << N3 << " " << N4 << std::endl;
     return 0;
+    
 }

@@ -1,4 +1,5 @@
 // cylinder.hpp. The cylinder class definition - A class for creating cylinder primitive shapes. 
+/*
 #ifndef CYLINDER_HPP
 #define CYLINDER_HPP
 
@@ -31,3 +32,4 @@ class Cylinder
 };
 
 #endif
+*/
