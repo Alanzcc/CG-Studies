@@ -1,53 +1,164 @@
+#include "Matrix.hpp"
 
-#ifndef Matrix_HPP
-#define Matrix_HPP
+Matrix::Matrix(size_t r, size_t c) : rows{r}, cols{c}, elems{ std::vector<std::vector<double>>(rows, std::vector<double>(cols)) } {}
 
-#include <vector>
-#include <initializer_list>
-#include <cmath>
-#include <stdexcept>
-
-
-class Matrix
+Matrix::Matrix(std::initializer_list<std::initializer_list<double>> lis)
+	: rows{lis.size()}, cols{lis.begin()->size()}, elems{std::vector<std::vector<double>>(rows, std::vector<double>(cols))}
 {
-private:
-	const size_t rows;
-	const size_t cols;
-	std::vector<std::vector<double>> elems;
+	size_t i = 0 , j = 0;
+	for (auto &row : lis) {
+		for (double data : row) {
+			elems[i][j++] = data;
+	}
+		++i;
+	}
+}
 
-	public: 
-		// Constructors
-		Matrix(size_t rows, size_t cols);
-		Matrix(std::initializer_list<std::initializer_list<double>> lis);
+size_t Matrix::GetRows() const { return rows; }
+size_t Matrix::GetCols() const { return cols; }
+double &Matrix::Get(size_t i, size_t j)
+{
+	if (i > rows || j > cols) 
+		throw std::out_of_range("Invalid Matrix range");
+	
+	return elems[i][j];
+}
+const double& Matrix::Get(size_t i, size_t j) const {
+	if (i > rows || j > cols)
+		throw std::out_of_range("Invalid Matrix range!");
+	return elems[i][j];
+}
 
-		// Destructors
-		//~Matrix();
+Matrix Matrix::Translation(const std::vector<double>& offset)
+{
+	return { {1, 0, 0, offset[0]},
+			 {0, 1, 0, offset[1]},
+			 {0, 0, 1, offset[2]},
+			 {0, 0, 0, 1} };
+}
 
-		// Gets
-		size_t GetRows() const;
-		size_t GetCols() const;
-		double &Get(size_t r, size_t c);
-		const double &Get(size_t r, size_t c) const;
+Matrix Matrix::RotationX (double theta)
+{
+	return { {1, 0, 0, 0},
+			 {0, cos(theta), sin(theta), 0},
+			 {0, -sin(theta), cos(theta), 0},
+			 {0, 0, 0, 1} };
+}
 
-		// Overload +, - and * operators(friends). 
-		Matrix operator+ (const Matrix &other) const;
-		void operator+ (double scalar);
+Matrix Matrix::RotationY (double theta)
+{
+	return { {cos(theta), 0, -sin(theta), 0},
+			 {0, 1, 0, 0},
+			 {sin(theta), 0, cos(theta), 0},
+			 {0, 0, 0, 1} };
+}
 
-		Matrix operator- (const Matrix &other) const;
-		void operator- (double scalar);
-
-		Matrix operator* (const Matrix &other) const;
-		std::vector<double> operator* (const std::vector<double> &other) const;
-		void operator* (double scalar);
-		
-		Matrix Translation(const std::vector<double> &offset);
-		Matrix RotationX(double theta);
-		Matrix RotationY(double theta);
-		Matrix RotationZ(double theta);
-		Matrix Scaling(const std::vector<double> &scale);
-
-
-};
+Matrix Matrix::RotationZ (double theta)
+{
+	return { {cos(theta), -sin(theta), 0, 0},
+			 {sin(theta), cos(theta), 0, 0},
+			 {0, 0, 1, 0},
+			 {0, 0, 0, 1} };
+}
 
 
-#endif
+Matrix Matrix::Scaling(const std::vector<double>& scale)
+{
+	return { {scale[0], 0, 0, 0},
+			 {0, scale[1], 0, 0},
+			 {0, 0, scale[2], 0},
+			 {0, 0, 0,         1} };
+}
+
+Matrix Matrix::operator+ (const Matrix& other) const
+{
+	if (rows != other.GetRows() || cols != other.GetCols())
+		throw std::out_of_range("Invalid Matrix range!");
+	Matrix sumMat = Matrix(rows, other.GetCols());
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < other.GetCols(); ++j)
+		{
+			sumMat.elems[i][j] = elems[i][j] + other.elems[i][j];
+		}
+	}
+	return sumMat;
+}
+void Matrix::operator+ (double scalar)
+{
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < cols; ++j)
+		{
+			elems[i][j] += scalar;
+		}
+	}
+}
+
+Matrix Matrix::operator- (const Matrix& other) const
+{
+	if (rows != other.GetRows() || cols != other.GetCols())
+		throw std::out_of_range("Invalid Matrix range!");
+	Matrix minusMat = Matrix(rows, other.GetCols());
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < other.GetCols(); ++j)
+		{
+			minusMat.elems[i][j] = elems[i][j] + other.elems[i][j];
+		}
+	}
+	return minusMat;
+}
+void Matrix::operator- (double scalar)
+{
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < cols; ++j)
+		{
+			elems[i][j] -= scalar;
+		}
+	}
+}
+
+Matrix Matrix::operator* (const Matrix &other) const
+{
+	if (cols != other.GetRows())
+		throw std::out_of_range("Invalid Matrix range!");
+	Matrix multMat = Matrix(rows, other.GetCols());
+	double sum;
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < other.GetCols(); ++j)
+		{
+			sum = 0;
+			for (size_t k = 0; k < cols; ++k)
+			{
+				sum += Get(i, k) * other.Get(k, j);
+			}
+			multMat.Get(i, j) = sum;
+		}
+	}
+	return multMat;
+}
+std::vector<double> Matrix::operator* (const std::vector<double> &other) const
+{
+	if (cols != 4)
+		throw std::out_of_range("Invalid Matrix range!");
+	std::vector<double> result;
+	int k = 0;
+	for (size_t i = 0; i < rows; ++i)
+	{
+	result.push_back(other[0] * Get(i, 0) + other[1] * Get(i, 1) + other[2] * Get(i, 2) + Get(i, 4));
+	}
+	return result;
+}
+void Matrix::operator* (double scalar)
+{
+	for (size_t i = 0; i < rows; ++i)
+	{
+		for (size_t j = 0; j < cols; ++j)
+		{
+			elems[i][j] *= scalar;
+		}
+	}
+}
