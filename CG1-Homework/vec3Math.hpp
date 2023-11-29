@@ -1,26 +1,43 @@
-#ifndef vec3Math_HPP
-#define vec3Math_HPP
+#ifndef Vector_HPP
+#define Vector_HPP
+
 #include <vector>
 #include <cmath>
 
-// Standard 3D vector operations
-double norm(const std::vector<double>& vector);
-double dotProduct(const std::vector<double>& vectorA, std::vector<double>& vectorB);
-std::vector<double> crossProduct(const std::vector<double>& vectorA, const std::vector<double>& vectorB);
-std::vector<double> normalize(const std::vector<double>& vector);
+class Vector
+{
+	public:
 
-// Operations bewteen vectors
-std::vector<double> multiplyVectors(const std::vector<double>& vectorA, const std::vector<double>& vectorB);
-std::vector<double> divideVectors(const std::vector<double>& vectorA, const std::vector<double>& vectorB);
-std::vector<double> plusVectors(const std::vector<double>& vectorA, const std::vector<double>& vectorB);
-std::vector<double> minusVectors(const std::vector<double>& vectorA, const std::vector<double>& vectorB);
+		double x;
+		double y;
+		double z;
+		
+		// Constructors
+		Vector();
+		Vector(std::vector<double> &other);
+		Vector(double a, double b, double c);
 
-// Operations between vectors and scalars
-std::vector<double> multiplyByScalar(const std::vector<double>& vector, double scalar);
-std::vector<double> divideByScalar(const std::vector<double>& vector, double scalar);
-std::vector<double> sumByScalar(const std::vector<double>& vector, double scalar);
-std::vector<double> subtractionByScalar(const std::vector<double>& vector, double scalar);
+		// Vector shenanigans
+		double norm() const;
+		Vector normalize() const;
+		double dot(const Vector& other) const;
+		Vector cross(const Vector& other) const;
+		
+		// Operations
 
+		Vector operator* (const Vector& rhs) const; 
+		Vector operator* (double scalar) const;
+
+		Vector operator/ (const Vector& rhs) const;
+		Vector operator/ (double scalar) const;
+		
+		Vector operator+ (const Vector& rhs) const;
+		Vector operator+ (double scalar) const;
+
+		Vector operator- (const Vector& rhs) const;
+		Vector operator- (double scalar) const;
+		Vector operator- () const;
+};
 
 
 #endif

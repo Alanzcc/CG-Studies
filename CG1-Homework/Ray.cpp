@@ -1,7 +1,7 @@
 #include "Ray.hpp"
 
-Ray::Ray(std::vector<double> initialPoint, std::vector<double> direction)
-{
-    this->initialPoint = initialPoint;
-    this->direction = normalize(minusVectors(initialPoint, direction));
-}
+Ray::Ray(Point o, Vector d) : origin {o}, direction{d.normalize()} {}
+Ray::Ray(Point o, Point d) : origin{o}, direction{(d - o).normalize()} {}
+
+Point Ray::get_origin() const { return origin; }
+Vector Ray::get_direction() const { return direction; }

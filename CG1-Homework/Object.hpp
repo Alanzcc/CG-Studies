@@ -1,22 +1,34 @@
-#ifndef Canvas_HPP
-#define Canvas_HPP
+#ifndef Object_HPP
+#define Object_HPP
 
 #include <vector>
-#include "Sphere.hpp"
-#include "Plane.hpp"
-#include "CircularPlane.hpp"
+#include <cmath>
+#include <optional>
+#include <algorithm>
+
 #include "Ray.hpp"
+#include "Vector.hpp"
+#include "Intensity.hpp"
 
-class Canvas
+class Object
 {
-public:
-    int windowWidth, windowHeight, windowDistance, numLines,
-        numColumns, windowMinX, windowMaxY;
-    double  deltaX, deltaY;
+	public:
+       
+        Vector emissive_color;  
+        Vector ambient_color;
+        Vector diffuse_color;
+        Vector specular_color;
+        int shininess;
 
-    Canvas(int windowWidth, int windowHeight, int windowDistance,
-        int numLines, int numColumns);
-    std::vector<std::vector<std::vector<double>>> Raycast(Object* object, std::vector<double> lightSource, std::vector<double> intensity);
+        virtual std::optional<Vector> intercept(Ray &Ray) = 0;
+       
+        virtual std::optional<Vector> get_normal(const Vector &intersection) const = 0;
+
+        virtual Intensity get_emissive_color() const = 0;
+        virtual Intensity get_ambient_color() const = 0;
+        virtual Intensity get_diffuse_color() const = 0;
+        virtual Intensity get_specular_color() const = 0;
+        virtual double get_shininess() const = 0;
 };
 
 #endif

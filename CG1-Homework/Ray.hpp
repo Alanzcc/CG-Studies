@@ -1,15 +1,21 @@
 #ifndef Ray_HPP
 #define Ray_HPP
-#include <vector>
-#include "vec3Math.hpp"
+
+
+#include "Point.hpp"
+#include "Vector.hpp"
 
 class Ray
 {
-    public:
-        std::vector<double> initialPoint;
-        std::vector<double> direction; // Must be a normalized vector
+public:
+    Point origin;
+    Vector direction;
 
-        Ray(std::vector<double> initialPoint, std::vector<double> direction);
+    Ray(Point origin, Vector direction);
+    Ray(Point origin, Point direction);
+
+    Point get_origin() const;
+    Vector get_direction() const;
 };
 
 #endif
