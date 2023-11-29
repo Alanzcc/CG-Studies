@@ -14,11 +14,11 @@ class Object
 {
 	public:
        
-        Vector emissive_color;  
-        Vector ambient_color;
-        Vector diffuse_color;
-        Vector specular_color;
-        int shininess;
+        Intensity emissive_color;  
+        Intensity ambient_color;
+        Intensity diffuse_color;
+        Intensity specular_color;
+        double shininess;
 
         virtual std::optional<Vector> intercept(Ray &Ray) = 0;
        

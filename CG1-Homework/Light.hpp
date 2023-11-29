@@ -11,7 +11,7 @@ class Light
 {
 public:
     
-    virtual Intensity lighting(const Object& first, std::vector<Object*> objs, const Vector& intersection, const Ray& Eye) const = 0;
+    virtual Intensity lighting(const Object& inter_obj, std::vector<Object*> objs, const Vector& intersection, const Ray& Eye) const = 0;
     
 };
 #endif

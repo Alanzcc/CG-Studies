@@ -1,0 +1,20 @@
+﻿  Building Custom Rule C:/Users/Júlia/source/repos/CG-Studies/CG1-Homework/CMakeLists.txt
+  main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\optional(12): warning STL4038: The contents of <optional> are available only with C++17 or later.
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Object.hpp(20,22): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\algorithm(76,1): message : see declaration of 'std'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Object.hpp(20,30): error C2143: syntax error: missing ';' before '<'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Object.hpp(20,22): error C2433: 'Object::optional': 'virtual' not permitted on data declarations
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Object.hpp(20,30): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Object.hpp(20,80): error C2238: unexpected token(s) preceding ';'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Sphere.hpp(16,14): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\algorithm(76,1): message : see declaration of 'std'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Sphere.hpp(16,22): error C2143: syntax error: missing ';' before '<'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Sphere.hpp(16,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Sphere.hpp(16,68): error C2238: unexpected token(s) preceding ';'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Cylinder.hpp(28,14): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\algorithm(76,1): message : see declaration of 'std'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Cylinder.hpp(28,22): error C2143: syntax error: missing ';' before '<'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Cylinder.hpp(28,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\Cylinder.hpp(28,68): error C2238: unexpected token(s) preceding ';'
+C:\Users\Júlia\source\repos\CG-Studies\CG1-Homework\main.cpp(8,14): fatal  error C1083: Cannot open include file: 'SDL.h': No such file or directory
