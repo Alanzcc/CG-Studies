@@ -1,4 +1,4 @@
-#include "../include/Lights/Intensity.hpp"
+#include "../include/Algebra/Intensity.hpp"
 
 Intensity::Intensity(double r, double g, double b)
 {

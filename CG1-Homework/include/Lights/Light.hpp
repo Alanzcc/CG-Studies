@@ -5,7 +5,7 @@
 #include "../Algebra/Vec3.hpp"
 #include "../Algebra/Ray.hpp"
 #include "../Objects/Object.hpp"
-#include "Intensity.hpp"
+#include "../Algebra/Intensity.hpp"
 
 class Light
 {

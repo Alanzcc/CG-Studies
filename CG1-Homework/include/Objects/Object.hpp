@@ -8,8 +8,9 @@
 
 #include "../Algebra/Ray.hpp"
 #include "../Algebra/Vec3.hpp"
-#include "Intensity.hpp"
+#include "../Algebra/Intensity.hpp"
 
+using IntCo = std::pair<std::optional<Vec3>, Intensity>;
 class Object
 {
 	public:
