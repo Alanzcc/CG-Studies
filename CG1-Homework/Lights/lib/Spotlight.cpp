@@ -1,4 +1,4 @@
-#include "../include/Lights/Spotlight.hpp"
+#include "../include/Spotlight.hpp"
 
 Spotlight::Spotlight(Point o, Vec3 di, Intensity lc, Point de, double a) : origin{ o }, direction{ di }, light_color{ lc }, decay{ de }, theta{ a } {}
 

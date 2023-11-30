@@ -1,4 +1,4 @@
-#include "../include/Algebra/Mat4.hpp"
+#include "../include/Mat4.hpp"
 
 Mat4::Mat4(size_t r, size_t c) : rows{r}, cols{c}, elems{ std::vector<std::vector<double>>(rows, std::vector<double>(cols)) } {}
 

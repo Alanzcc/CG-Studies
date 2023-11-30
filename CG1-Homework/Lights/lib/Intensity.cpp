@@ -1,4 +1,4 @@
-#include "../include/Algebra/Intensity.hpp"
+#include "../include/Intensity.hpp"
 
 Intensity::Intensity(double r, double g, double b)
 {

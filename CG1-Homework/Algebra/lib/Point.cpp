@@ -1,4 +1,4 @@
-#include "../include/Algebra/Point.hpp"
+#include "../include/Point.hpp"
 
 // Constructors
 Point::Point() : x{0}, y{0}, z{0} {}

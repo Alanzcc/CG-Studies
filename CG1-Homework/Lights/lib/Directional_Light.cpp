@@ -1,4 +1,4 @@
-#include "../include/Lights/Directional_Light.hpp"
+#include "../include/Directional_Light.hpp"
 
 Directional_Light::Directional_Light(Vec3 d, Intensity lc) : direction{ d.normalize()}, light_color{lc} {}
 

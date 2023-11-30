@@ -6,9 +6,9 @@
 #include <optional>
 #include <algorithm>
 
-#include "../Algebra/Ray.hpp"
-#include "../Algebra/Vec3.hpp"
-#include "../Algebra/Intensity.hpp"
+#include "../Algebra/include/Ray.hpp"
+#include "../Algebra/include/Vec3.hpp"
+#include "../Lights/include/Intensity.hpp"
 
 using IntCol = std::pair<std::optional<Vec3>, Intensity>;
 class Object

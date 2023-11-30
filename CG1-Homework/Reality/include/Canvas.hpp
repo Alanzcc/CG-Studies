@@ -2,8 +2,8 @@
 #define Canvas_HPP
 
 #include <vector>
-#include "Sphere.hpp"
-#include "Ray.hpp"
+
+#include "../Algebra/include/Ray.hpp"
 
 class Canvas
 {

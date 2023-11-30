@@ -1,4 +1,4 @@
-#include "../include/Algebra/Ray.hpp"
+#include "../include/Ray.hpp"
 
 Ray::Ray(Point o, Vec3 d) : origin {o}, direction{d.normalize()} {}
 Ray::Ray(Point o, Point d) : origin{o}, direction{(d - o).normalize()} {}

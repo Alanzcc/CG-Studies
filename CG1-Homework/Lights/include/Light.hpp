@@ -1,11 +1,11 @@
 #ifndef Light_HPP
 #define Light_HPP
 
-#include "../Algebra/Point.hpp"
-#include "../Algebra/Vec3.hpp"
-#include "../Algebra/Ray.hpp"
-#include "../Objects/Object.hpp"
-#include "../Algebra/Intensity.hpp"
+#include "../Algebra/include/Point.hpp"
+#include "../Algebra/include/Vec3.hpp"
+#include "../Algebra/include/Ray.hpp"
+#include "../Objects/include/Object.hpp"
+#include "../Lights/include/Intensity.hpp"
 
 class Light
 {

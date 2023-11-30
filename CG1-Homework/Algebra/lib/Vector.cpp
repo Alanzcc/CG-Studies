@@ -1,4 +1,4 @@
-#include "../include/Algebra/Vec3.hpp"
+#include "../include/Vec3.hpp"
 
 // Constructors
 Vec3::Vec3() : x{0}, y{0}, z{0} {}

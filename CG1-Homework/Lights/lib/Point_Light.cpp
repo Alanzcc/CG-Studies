@@ -1,4 +1,4 @@
-#include "../include/Lights/Point_Light.hpp"
+#include "../include/Point_Light.hpp"
 
 Point_Light::Point_Light(Point o, Vec3 di, Intensity lc, Point de) : origin{ o }, direction{ di }, light_color{ lc }, decay{ de.x, de.y, de.z } {}
  
