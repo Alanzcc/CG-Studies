@@ -1,6 +1,6 @@
 
-#ifndef Matrix_HPP
-#define Matrix_HPP
+#ifndef Mat4_HPP
+#define Mat4_HPP
 
 #include <vector>
 #include <initializer_list>
@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 
-class Matrix
+class Mat4
 {
 private:
 	const size_t rows;
@@ -17,11 +17,11 @@ private:
 
 	public: 
 		// Constructors
-		Matrix(size_t rows, size_t cols);
-		Matrix(std::initializer_list<std::initializer_list<double>> lis);
+		Mat4(size_t rows, size_t cols);
+		Mat4(std::initializer_list<std::initializer_list<double>> lis);
 
 		// Destructors
-		//~Matrix();
+		//~Mat4();
 
 		// Gets
 		size_t GetRows() const;
@@ -30,21 +30,21 @@ private:
 		const double &Get(size_t r, size_t c) const;
 
 		// Overload +, - and * operators(friends). 
-		Matrix operator+ (const Matrix &other) const;
+		Mat4 operator+ (const Mat4 &other) const;
 		void operator+ (double scalar);
 
-		Matrix operator- (const Matrix &other) const;
+		Mat4 operator- (const Mat4 &other) const;
 		void operator- (double scalar);
 
-		Matrix operator* (const Matrix &other) const;
+		Mat4 operator* (const Mat4 &other) const;
 		std::vector<double> operator* (const std::vector<double> &other) const;
 		void operator* (double scalar);
 		
-		Matrix Translation(const std::vector<double> &offset);
-		Matrix RotationX(double theta);
-		Matrix RotationY(double theta);
-		Matrix RotationZ(double theta);
-		Matrix Scaling(const std::vector<double> &scale);
+		Mat4 Translation(const std::vector<double> &offset);
+		Mat4 RotationX(double theta);
+		Mat4 RotationY(double theta);
+		Mat4 RotationZ(double theta);
+		Mat4 Scaling(const std::vector<double> &scale);
 
 
 };

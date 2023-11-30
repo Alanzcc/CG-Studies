@@ -1,11 +1,11 @@
-#include "Spotlight.hpp"
+#include "../include/Lights/Spotlight.hpp"
 
-Spotlight::Spotlight(Point o, Vector di, Intensity lc, Point de, double a) : origin{ o }, direction{ di }, light_color{ lc }, decay{ de }, theta{ a } {}
+Spotlight::Spotlight(Point o, Vec3 di, Intensity lc, Point de, double a) : origin{ o }, direction{ di }, light_color{ lc }, decay{ de }, theta{ a } {}
 
-Intensity Spotlight::lighting(const Object& inter_obj, std::vector<Object*> objs, const Vector& intersection, const Ray& Eye) const
+Intensity Spotlight::lighting(const Object& inter_obj, std::vector<Object*> objs, const Vec3& intersection, const Ray& Eye) const
 {
 	// Criação do vetor da luz, comprimento e dps normaliza
-	Vector light = (origin - intersection);
+	Vec3 light = (origin - intersection);
 	double light_length = light.norm();
 
 	light = light.normalize();
@@ -27,7 +27,7 @@ Intensity Spotlight::lighting(const Object& inter_obj, std::vector<Object*> objs
 			auto other_inter = obj->intercept(light_ray);
 			if (other_inter.has_value())
 			{
-				Vector other_inter_vector = (other_inter - origin);
+				Vec3 other_inter_vector = (other_inter - origin);
 				double other_inter_length = other_inter_vector.norm();
 				if (light_length >= other_inter_length)
 					return { 0, 0, 0 };
@@ -42,8 +42,8 @@ Intensity Spotlight::lighting(const Object& inter_obj, std::vector<Object*> objs
 
 	// Calculos do termo especular da luz
 
-	Vector view = -Eye.get_direction();
-	Vector reflection = (*normal) * (2 * (*normal).dot(view)) - view;
+	Vec3 view = -Eye.get_direction();
+	Vec3 reflection = (*normal) * (2 * (*normal).dot(view)) - view;
 
 	Intensity diffuse_term = (inter_obj.get_diffuse_color() * light_color) * std::max((*normal).dot(light), 0.0);
 
@@ -51,7 +51,7 @@ Intensity Spotlight::lighting(const Object& inter_obj, std::vector<Object*> objs
 	// Calculos do termo especular da luz
 	double shininess = inter_obj.get_shininess();
 
-	Vector half_angle = (light + view).normalize();
+	Vec3 half_angle = (light + view).normalize();
 
 	double facing = 0;
 	if ((*normal).dot(light) > 0)

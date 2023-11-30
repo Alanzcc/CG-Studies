@@ -3,19 +3,19 @@
 
 
 #include "Point.hpp"
-#include "Vector.hpp"
+#include "Vec3.hpp"
 
 class Ray
 {
 public:
     Point origin;
-    Vector direction;
+    Vec3 direction;
 
-    Ray(Point origin, Vector direction);
+    Ray(Point origin, Vec3 direction);
     Ray(Point origin, Point direction);
 
     Point get_origin() const;
-    Vector get_direction() const;
+    Vec3 get_direction() const;
 };
 
 #endif

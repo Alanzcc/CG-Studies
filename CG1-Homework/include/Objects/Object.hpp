@@ -6,8 +6,8 @@
 #include <optional>
 #include <algorithm>
 
-#include "Ray.hpp"
-#include "Vector.hpp"
+#include "../Algebra/Ray.hpp"
+#include "../Algebra/Vec3.hpp"
 #include "Intensity.hpp"
 
 class Object
@@ -20,9 +20,9 @@ class Object
         Intensity specular_color;
         double shininess;
 
-        virtual std::optional<Vector> intercept(Ray &Ray) = 0;
+        virtual std::optional<Vec3> intercept(Ray &Ray) = 0;
        
-        virtual std::optional<Vector> get_normal(const Vector &intersection) const = 0;
+        virtual std::optional<Vec3> get_normal(const Vec3 &intersection) const = 0;
 
         virtual Intensity get_emissive_color() const = 0;
         virtual Intensity get_ambient_color() const = 0;
