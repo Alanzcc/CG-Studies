@@ -1,4 +1,4 @@
-#include "../include/Displays/Canvas.hpp"
+#include "../include/Reality/Canvas.hpp"
 
 Canvas::Canvas(int windowWidth, int windowHeight, int windowDistance,
     int numLines, int numColumns)
