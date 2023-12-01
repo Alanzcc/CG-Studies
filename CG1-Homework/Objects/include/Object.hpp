@@ -11,7 +11,7 @@
 #include "../Algebra/include/Vec3.hpp"
 #include "../Lights/include/Intensity.hpp"
 
-using IntCol = std::pair<std::optional<Vec3>, Intensity>;
+using IntCol = std::pair <Vec3, Intensity>;
 class Object
 {
 	public:
@@ -22,7 +22,7 @@ class Object
         Intensity specular_color;
         double shininess;
 
-        virtual std::optional<Vec3> intercept(Ray &Ray) = 0;
+        virtual std::optional<IntCol> intercept(Ray &Ray) = 0;
        
         virtual std::optional<Vec3> get_normal(const Vec3 &intersection) const = 0;
 

@@ -1,8 +1,9 @@
 #include "../include/Point_Light.hpp"
 
+
 Point_Light::Point_Light(Point o, Vec3 di, Intensity lc, Point de) : origin{ o }, direction{ di }, light_color{ lc }, decay{ de.x, de.y, de.z } {}
  
-Intensity Point_Light::lighting(const Object& inter_obj, std::vector<Object*> objs, const Vec3& intersection, const Ray& Eye) const
+Intensity Point_Light::lighting(const Object& inter_obj, std::vector<Object*> objs, const IntCol& intersection, const Ray& Eye) const
 {
 	Vec3 light = (origin - intersection);
 	double light_length = light.norm();

@@ -1,17 +1,15 @@
 #include "CircularPlane.hpp"
 #include <iostream>
-CircularPlane::CircularPlane(double radius, std::vector<double> center, std::vector<double> normal, double constAttenuation, double linearAttenuation,
-    double quadraticAttenuation, std::vector<double> ambientReflex,
-    std::vector<double> diffuseReflex, std::vector<double> specularReflex, int shininess) : Plane(center, normal, constAttenuation,
-    linearAttenuation, quadraticAttenuation, ambientReflex, diffuseReflex, specularReflex, shininess)
-{
-    this->radius = radius;
-    
-}
 
-std::optional<std::vector<double>> CircularPlane::doesItIntercept(Ray Ray)
+CircularPlane::CircularPlane(double radius):
+    Plane(Point center, Vec3 normal, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess):
+    radius(radius)
+    {}
+
+
+std::optional<IntCol> CircularPlane::intercept(Ray Ray)
 {
-    double denominator = dotProduct(Ray.direction, this->normal);
+    double denominator = Ray.direction.dot(normal);
     //std::cout << "Dem is: " << denominator << std::endl;
 
     //std::cout << "Num is: " << numerator << std::endl;
@@ -20,58 +18,50 @@ std::optional<std::vector<double>> CircularPlane::doesItIntercept(Ray Ray)
     {
         return {};
     }
-    double intersectionScalar = dotProduct(minusVectors(this->center, Ray.initialPoint), divideByScalar(this->normal, denominator));
+    double intersectionScalar = (center - Ray.origin).dot(normal)/ denominator;
     //std::cout << "Scalar is: " << intersectionScalar << std::endl;
     
-    
-    std::vector<double> intersectionPoint = plusVectors(Ray.initialPoint, multiplyByScalar(Ray.direction, intersectionScalar));
-    double distance = norm(minusVectors(intersectionPoint, this->center));
+    Vec3 intersectionPoint = Ray.origin + (Ray.direction * intersectionScalar);
+   //std::cout << "Intersection point is: " << intersectionPoint << std::endl;
+
+   double distance = (intersectionPoint - center).norm();
     //std::cout <<" Distance: " << distance << std::endl;
 
-    if (distance > this->radius)
+    if (distance > radius)
     {
         return {};
     }
-    return intersectionPoint;
+
+    return std::make_pair(intersectionPoint, get_emissive_color());
+    
 }
 
-std::vector<double> CircularPlane::Illumination(Ray Ray, std::vector<double> intensity)
+
+//getters
+
+Intensity CircularPlane::get_emissive_color()
 {
-    std::vector<double> illumination;
-    std::vector<double> interPoint = doesItIntercept(Ray).value_or(std::vector<double>(3, -2));
-    if (interPoint[0] != -2)
-    {
-        std::vector<double> light = normalize(minusVectors(Ray.initialPoint, interPoint));
+    return emissive_color;
+}
 
-        std::vector<double> reflected = minusVectors(multiplyByScalar(this->normal, 2 * dotProduct(light, this->normal)), light);
+Intensity CircularPlane::get_ambient_color()
+{
+    return ambient_color;
+}
 
-        std::vector<double> vision = multiplyByScalar(normalize(minusVectors(interPoint, Ray.initialPoint)), -1); // While cam = ray_source
+Intensity CircularPlane::get_diffuse_color()
+{
+    return diffuse_color;
+}
 
-        double diffusionFactor = dotProduct(light, this->normal);
-        double specularFactor = pow(dotProduct(reflected, vision), this->shininess); 
+Intensity CircularPlane::get_specular_color()
+{
+    return specular_color;
+}
 
-        std::vector<double> ambientIllumination = multiplyVectors(intensity, this->ambientReflex);
-        std::vector<double> diffusionIllumination = multiplyByScalar(multiplyVectors(intensity, this->diffuseReflex), diffusionFactor);
-        std::vector<double> specularIllumination = multiplyByScalar(multiplyVectors(intensity, this->specularReflex), specularFactor);
-
-        illumination = plusVectors(ambientIllumination, plusVectors(diffusionIllumination, specularIllumination));
-        for (int i = 0; i < 3; i++)
-        {
-            if (illumination[i] > 1)
-            {
-                illumination[i] = 1;
-            }
-        }
-        //std::cout << illumination[0] << " " << illumination[1] << " " << illumination[2] << " " << std::endl;
-    }
-    else
-    {
-        illumination.resize(3, -2);
-    }
-
-
-    return illumination;
-
+std::optional<Vec3> CircularPlane::get_normal (const Vec3 &intersection)
+{
+    return normal;
 }
 
 

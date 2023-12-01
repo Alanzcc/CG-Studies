@@ -116,7 +116,13 @@ std::vector<double> Cylinder::Illumination(Ray Ray, std::vector<double> intensit
 
 Cylinder::Cylinder(Vec3 direction, double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, CircularPlane* bottom, CircularPlane* top, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
     : direction(direction), radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop)), bottom(bottom), top(top), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color),
-    shininess(shininess) {}
+    shininess(shininess) {
+        Vec3 bottomNormal = -axis;
+        bottom = new CircularPlane(radius, centerBottom, bottomNormal)
+
+        Vec3 topNormal = axis;
+        top = new CircularPlane(radius, centerTop, topNormal)
+    }
 
 //intercept method for cylinder
 

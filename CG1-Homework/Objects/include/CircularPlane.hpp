@@ -6,12 +6,22 @@ class CircularPlane : public Plane
 {
 	public:
 		double radius;
+		Point center;
+		Vec3 normal;
+		Intensity ambientReflex;
+		Intensity diffuseReflex;
+		Intensity specularReflex;
+		double shininess;
 
-		CircularPlane(double radius, std::vector<double> center, std::vector<double> normal, double constAttenuation, double linearAttenuation,
-			double quadraticAttenuation, std::vector<double> ambientReflex,
-			std::vector<double> diffuseReflex, std::vector<double> specularReflex, int shininess);
-		std::optional<std::vector<double>> doesItIntercept(Ray Ray);
-		std::vector<double> Illumination(Ray Ray, std::vector<double> intensity);  
+		Circular Plane(double radius, Point center, Vec3 normal, Intensity ambientReflex, Intensity diffuseReflex, Intensity specularReflex, double shininess);
+		
+		std::optional<IntCol> intercept(Ray &Ray) override;
+		std::optional<Vec3> get_normal (const Vec3 &intersection) override;
+		Intensity get_emissive_color() override;
+		Intensity get_ambient_color() override;
+		Intensity get_diffuse_color() override;
+		Intensity get_specular_color() override;
+		double get_shininess() override;
 };
 
 #endif
