@@ -9,6 +9,8 @@ Intensity::Intensity(double r, double g, double b)
 	blue = b;
 }
 
+Intensity::Intensity(const SDL_Color& rgb) : red{static_cast<double>(rgb.r) / 255.0}, green{static_cast<double>(rgb.g) 255.0}, blue{static_cast<double>(rgb.b)255.0} {}
+
 std::initializer_list<int> Intensity::convert_to_SDL_Color() const
 {
 	return { static_cast<int>(red * 255), static_cast<int>(green * 255), static_cast<int>(blue * 255) };
