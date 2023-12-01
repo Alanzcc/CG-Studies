@@ -109,3 +109,66 @@ std::vector<double> Cylinder::Illumination(Ray Ray, std::vector<double> intensit
     return illumination;
 }
 */
+
+#include "Cylinder.hpp"
+
+//constructor for cylinder
+
+Cylinder::Cylinder(Vec3 direction, double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, CircularPlane* bottom, CircularPlane* top, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
+    : direction(direction), radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop)), bottom(bottom), top(top), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color),
+    shininess(shininess) {}
+
+//intercept method for cylinder
+
+std::optional<IntCol> Cylinder::doesItIntercept(Ray Ray) {
+    //v, w
+    // v = (Po - B) - ((Po - B) . u)u
+    Vec3 v = (Ray.origin - centerBottom) - (axis *(axis.dot(Ray.origin - centerBottom)));
+    // w = d - (d. u)u
+    Vec3 w = (Ray.direction) - axis * (Ray.direction.dot(axis));
+
+    //coefficient of the quadratic equation
+    double a = w.dot(w);
+    double b = 2 * v.dot(w);
+    double c = v.dot(v) - (radius * radius);
+    double delta = (b * b) - (4.0 * a * c);
+
+    if delta < 0 {
+        return std::nullopt; //no intersection
+    }
+
+    else{
+        //parameters of the intersection
+        double t1 = (-b + sqrt(delta)) / (2.0 * a);
+        double t2 = (-b - sqrt(delta)) / (2.0 * a);
+        //p1
+        Vec3 p1 = Ray.origin + Ray.direction * t1;
+        //p2
+        Vec3 p2 = Ray.origin + Ray.direction * t2;
+
+        //create a vector that will store the valid points so we choose the closest one
+        std::vector<std::pair<double, Point>> validPoints;
+
+        //0 ≤ (P - B) . u ≤ height; so we know if p1 and p2 are in the cylinder (validPoints)
+        double p1_projection = axis.dot(p1 - centerBottom);
+        double p2_projection = axis.dot(p2 - centerBottom);
+
+        if(t1>=0) {
+            if (p1_projection >= 0 && p1_projection <= height) {
+                validPoints.push_back(std::make_pair(t1, p1));
+            }
+        }
+        if(t2>=0) {
+            if (p2_projection >= 0 && p2_projection <= height) {
+                validPoints.push_back(std::make_pair(t2, p2));
+            }}
+        
+        //then we check if the ray intercepts the top and bottom planes
+
+    std::optional<IntCol> bottom = bottom->doesItIntercept(Ray);
+    std::optional<IntCol> top = top->doesItIntercept(Ray);
+
+
+}
+}
+

@@ -5,6 +5,7 @@
 #include <cmath>
 #include <optional>
 #include <algorithm>
+#include <utility>
 
 #include "../Algebra/include/Ray.hpp"
 #include "../Algebra/include/Vec3.hpp"
