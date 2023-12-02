@@ -26,3 +26,40 @@ std::optional<std::vector<double>> Plane::intercept(Ray Ray)
     return std::make_pair(intersectionPoint, get_emissive_color());
 }
 
+//getters
+Intensity
+Intensity Plane::get_emissive_color() const
+{
+    return emissive_color;
+}
+
+Intensity Plane::get_ambient_color() const
+{
+    return ambient_color;
+}
+
+Intensity Plane::get_diffuse_color() const
+{
+    return diffuse_color;
+}
+
+Intensity Plane::get_specular_color() const
+{
+    return specular_color;
+}
+
+double Plane::get_shininess() const
+{
+    return shininess;
+}
+
+std::optional<Vec3> Plane::get_normal(const Vec3 &intersection) const
+{
+    return normal;
+}
+
+
+//translate
+//transform
+
+

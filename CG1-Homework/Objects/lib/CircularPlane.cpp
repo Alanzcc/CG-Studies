@@ -36,7 +36,6 @@ std::optional<IntCol> CircularPlane::intercept(Ray Ray)
     
 }
 
-
 //getters
 
 Intensity CircularPlane::get_emissive_color()
@@ -59,9 +58,17 @@ Intensity CircularPlane::get_specular_color()
     return specular_color;
 }
 
+double CircularPlane::get_shininess()
+{
+    return shininess;
+}
+
 std::optional<Vec3> CircularPlane::get_normal (const Vec3 &intersection)
 {
     return normal;
 }
 
+//translate
+//scale
+//transform
 

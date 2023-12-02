@@ -3,18 +3,26 @@
 
 #include "Object.hpp"
 
-class Sphere : public Object 
-{
+class Sphere: public Object
+{ 
     public:
         double radius;
-        std::vector<double> center;
+        Point center;
+        Intensity emissive_color;
+        Intensity ambient_color;
+        Intensity diffuse_color;
+        Intensity specular_color;
+        double shininess;
 
-        Sphere(double radius, std::vector<double> center, std::vector<double> ambientReflex,
-               std::vector<double> diffuseReflex, std::vector<double> specularReflex,
-               int shininess);
+        Sphere(double radius, Point center, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
 
-        std::optional<std::vector<double>> doesItIntercept(Ray Ray);
-        std::vector<double> Illumination(Ray Ray, std::vector<double> intensity);
+        std::optional<IntCol> intercept(Ray &Ray) override;
+        std::optional<Vec3> get_normal(const Vec3 &intersection) const override;
+        Intensity get_emissive_color() const override;
+        Intensity get_ambient_color() const override;
+        Intensity get_diffuse_color() const override;
+        Intensity get_specular_color() const override;
+        double get_shininess() const override;
 };
 
 #endif

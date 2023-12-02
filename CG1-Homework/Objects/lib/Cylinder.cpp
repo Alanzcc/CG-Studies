@@ -78,41 +78,24 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
 }
 }
 
-std::vector<double> Cylinder::Illumination(Ray Ray, std::vector<double> intensity)
-{
-    std::vector<double> illumination;
-    std::vector<double> interPoint = doesItIntercept(Ray).value_or(std::vector<double>(3, -2));
-    if (interPoint[0] != -2)
-    {
-        std::vector<double> light = normalize(minusVectors(Ray.initialPoint, interPoint));
-
-        std::vector<double> normal = normalize(divideByScalar(axis, this->radius));
-
-    std::vector<double> reflected = minusVectors(multiplyByScalar(normal, 2 * dotProduct(light, normal)), light);
-
-        std::vector<double> vision = multiplyByScalar(normalize(minusVectors(interPoint, Ray.initialPoint)), -1); // While cam = ray_source
-
-        double diffusionFactor = dotProduct(light, normal);
-        double specularFactor = pow(dotProduct(reflected, vision), this->shininess);
-
-        std::vector<double> ambientIllumination = multiplyVectors(intensity, this->ambientReflex);
-        std::vector<double> diffusionIllumination = multiplyByScalar(multiplyVectors(intensity, this->diffuseReflex), diffusionFactor);
-        std::vector<double> specularIllumination = multiplyByScalar(multiplyVectors(intensity, this->specularReflex), specularFactor);
-
-        illumination = plusVectors(ambientIllumination, plusVectors(diffusionIllumination, specularIllumination));
-    }
-    else
-    {
-        illumination.resize(3, -2);
-    }
-
-    return illumination;
-}
 */
 
 #include "Cylinder.hpp"
 
 //constructor for cylinder
+
+//constructor for cylinder but using object
+/*Cylinder::Cylinder(Vec3 direction, double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
+    : Object (emissive_color, ambient_color, diffuse_color, specular_color, shininess) 
+    , direction(direction), radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop))
+    {
+        Vec3 bottomNormal = -axis;
+        bottom = new CircularPlane(radius, centerBottom, bottomNormal)
+
+        Vec3 topNormal = axis;
+        top = new CircularPlane(radius, centerTop, topNormal)
+    }
+*/
 
 Cylinder::Cylinder(Vec3 direction, double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, CircularPlane* bottom, CircularPlane* top, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
     : direction(direction), radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop)), bottom(bottom), top(top), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color),
@@ -171,10 +154,52 @@ std::optional<IntCol> Cylinder::doesItIntercept(Ray Ray) {
         
         //then we check if the ray intercepts the top and bottom planes
 
-    std::optional<IntCol> bottom = bottom->doesItIntercept(Ray);
-    std::optional<IntCol> top = top->doesItIntercept(Ray);
+    std::optional<IntCol> bottom = bottom->intercept(Ray);
+    std::optional<IntCol> top = top->intercept(Ray);
 
+    if (bottom.has_value() & top.has_value()) {
+        //lenght of the ray from the origin to the intersection point of the bottom plane
+        double intersection_rayB = (bottom->first - Ray.origin).norm();
+        // ''' top plane
+        double intersection_rayT = (top->first - Ray.origin).norm();
 
+        //if the ray intersects the bottom plane first
+        if (intersection_rayB < intersection_rayT) {
+            //if the intersection point is inside the cylinder
+            validPoints.push_back(std::make_pair(intersection_rayB, bottom->first));
+        } else {
+            validPoints.push_back(std::make_pair(intersection_rayT, top->first));
+        }
+    } else if {
+        bottom.has_value() {
+        validPoints.push_back(std::make_pair((bottom->first - Ray.origin).norm(), bottom->first));
+    } else if {top.has_value() {
+        validPoints.push_back(std::make_pair((top->first - Ray.origin).norm(), top->first));
+    }
+
+    //find the minimum t (the closest point)
+    double minT = std::numeric_limits<double>::infinity();
+    Point closestPoint = Ray.origin;
+
+    //(t, p)
+    for (auto& point : validPoints) {
+        if (point.first < minT) {
+            minT = point.first; 
+            closestPoint = point.second;
+        }
+    }
+
+    //if there is no intersection
+    if (minT == std::numeric_limits<double>::infinity()) {
+        return std::nullopt;
+    } else {
+        return std::make_pair(closestPoint, get_emissive_color());
+    }
+    }
+
+    }
+  }
 }
-}
 
+//normal method for cylinder
+// [(q - centerBase) - (axis )
