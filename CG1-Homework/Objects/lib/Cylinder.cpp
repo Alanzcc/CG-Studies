@@ -80,7 +80,7 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
 
 */
 
-#include "Cylinder.hpp"
+#include "../include/Cylinder.hpp"
 
 //constructor for cylinder
 
@@ -97,8 +97,8 @@ std::optional<std::vector<double>> Cylinder::doesItIntercept(Ray Ray) {
     }
 */
 
-Cylinder::Cylinder(Vec3 direction, double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, CircularPlane* bottom, CircularPlane* top, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
-    : direction(direction), radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop)), bottom(bottom), top(top), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color),
+Cylinder::Cylinder(double radius, double height, Point centerBottom, Point centerTop, Vec3 axis, CircularPlane* bottom, CircularPlane* top, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
+    : radius(radius), height((centerBase - centerTop).norm()), centerBase(centerBase), centerTop(centerTop), axis(normalize(centerBase - centerTop)), bottom(bottom), top(top), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color),
     shininess(shininess) {
         Vec3 bottomNormal = -axis;
         bottom = new CircularPlane(radius, centerBottom, bottomNormal)
@@ -199,7 +199,25 @@ std::optional<IntCol> Cylinder::doesItIntercept(Ray Ray) {
 
     }
   }
-}
+//General Case:
+//If the given point is not on either base, the code calculates the normal vector by finding the point (pt) on the axis of the cylinder that is closest to the given point (p). The normal vector is then the normalized vector from p to pt. It is rotation-sensitive.
 
 //normal method for cylinder
-// [(q - centerBase) - (axis )
+std::optional<Vec3> Cylinder::get_normal(const Vec3 &intersection) const {
+    //if the intersection is on the bottom plane
+    if (bottom->intercept(Ray).has_value()) {
+        return bottom->get_normal(intersection);
+    }
+    //if the intersection is on the top plane
+    else if (top->intercept(Ray).has_value()) {
+        return top->get_normal(intersection);
+    }
+    //if the intersection is on the cylinder
+    else {
+        //pt
+        Vec3 pt = centerBottom + axis * (axis.dot(intersection - centerBottom));
+        //normal vector
+        Vec3 normal = normalize(intersection - pt);
+        return normal;
+    }
+}

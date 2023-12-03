@@ -43,8 +43,10 @@ class Cylinder
 #include <optional>
 #include <algorithm>
 #include "Ray.hpp"
-#include "Vector.hpp"
-#include "./Intensity.hpp"
+#include "Vec3.hpp"
+
+//#include "../Intensity.hpp"
+#include "../Lights/include/Intensity.hpp"
 #include "Object.hpp"
 #include "Point.hpp"
 #include "Light.hpp"
@@ -53,7 +55,6 @@ class Cylinder
 class Cylinder : public Object 
 {
     public:
-        Vec3 direction;
         double radius;
         double height;
         Point centerBase;
