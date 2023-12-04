@@ -13,7 +13,7 @@ class CircularPlane : public Plane
 		Intensity specularReflex;
 		double shininess;
 
-		Circular Plane(double radius, Point center, Vec3 normal, Intensity ambientReflex, Intensity diffuseReflex, Intensity specularReflex, double shininess);
+		CircularPlane(double radius, Point center, Vec3 normal, Intensity ambientReflex, Intensity diffuseReflex, Intensity specularReflex, double shininess);
 		
 		std::optional<IntCol> intercept(Ray &Ray) override;
 		std::optional<Vec3> get_normal (const Vec3 &intersection) override;
