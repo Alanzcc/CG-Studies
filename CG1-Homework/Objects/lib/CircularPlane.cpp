@@ -1,4 +1,5 @@
-#include "CircularPlane.hpp"
+#include "../include/CircularPlane.hpp"
+
 #include <iostream>
 
 CircularPlane::CircularPlane(double radius):
@@ -67,6 +68,7 @@ std::optional<Vec3> CircularPlane::get_normal (const Vec3 &intersection)
 {
     return normal;
 }
+//preciso mesmo?
 
 //translate
 //scale
