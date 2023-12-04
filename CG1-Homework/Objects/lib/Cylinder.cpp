@@ -221,3 +221,25 @@ std::optional<Vec3> Cylinder::get_normal(const Vec3 &intersection) const {
         return normal;
     }
 }
+
+//getters
+Intensity Cylinder::get_emissive_color() const {
+    return emissive_color;
+}
+
+Intensity Cylinder::get_ambient_color() const {
+    return ambient_color;
+}
+
+Intensity Cylinder::get_diffuse_color() const {
+    return diffuse_color;
+}
+
+Intensity Cylinder::get_specular_color() const {
+    return specular_color;
+}
+
+double Cylinder::get_shininess() const {
+    return shininess;
+}
+
