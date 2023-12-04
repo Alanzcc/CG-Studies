@@ -8,7 +8,7 @@ center(center), normal(normal), emissive_color(emissive_color), ambient_color(am
 {}
 
 
-std::optional<std::vector<double>> Plane::intercept(Ray Ray)
+std::optional<IntCol> Plane::intercept(Ray Ray)
 {
     Vec3 w = center - Ray.origin);;
     double denominator = Ray.direction.dot(normal);
