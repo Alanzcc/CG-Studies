@@ -1,4 +1,3 @@
-
 #ifndef Mat4_HPP
 #define Mat4_HPP
 
@@ -7,13 +6,12 @@
 #include <cmath>
 #include <stdexcept>
 
-
 class Mat4
 {
-private:
-	const size_t rows;
-	const size_t cols;
-	std::vector<std::vector<double>> elems;
+	private:
+		const size_t rows;
+		const size_t cols;
+		std::vector<std::vector<double>> elems;
 
 	public: 
 		// Constructors
