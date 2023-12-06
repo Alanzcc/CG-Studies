@@ -24,6 +24,8 @@ Quaternion Quaternion::operator*(double scalar) const { s *scalar, x *scalar, y 
 Vec3 Quaternion::operator*(const Vec3 &rhs) const
 {
     Quaternion conj = conjugate();
+    
+
 }
 
 Quaternion Quaternion::operator/(double scalar) const { s / scalar, x / scalar, y / scalar, z / scalar; }
