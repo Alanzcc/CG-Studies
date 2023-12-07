@@ -72,7 +72,7 @@ class Cylinder : public Object
         Cylinder(Point origin, Vec3 direction, double radius, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
 
         std::optional<IntCol> intercept(Ray &Ray) override;
-        std::optional<Vec3> get_normal(const Vector &intersection) const override;
+        std::optional<Vec3> get_normal(const Vec3 &intersection) const override;
         Intensity get_emissive_color() const override;
         Intensity get_ambient_color() const override;
         Intensity get_diffuse_color() const override;
