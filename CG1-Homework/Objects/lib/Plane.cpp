@@ -10,7 +10,7 @@ center(center), normal(normal), emissive_color(emissive_color), ambient_color(am
 
 std::optional<IntCol> Plane::intercept(Ray Ray)
 {
-    Vec3 w = center - Ray.origin);;
+    Vec3 w = (center - Ray.origin);
     double denominator = Ray.direction.dot(normal);
     if (denominator == 0)
     {

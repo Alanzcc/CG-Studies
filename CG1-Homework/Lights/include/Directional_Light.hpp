@@ -12,7 +12,7 @@ public:
     Intensity light_color;
 
     Directional_Light(Vec3 direction, Intensity light_color);
-    Intensity lighting(const Object &first, std::vector<Object*> objs, const Vec3& intersection, const Ray& Eye) const override;
+    Intensity lighting(const Object &first, std::vector<Object*> objs, const IntCol& intersection, const Ray& Eye) const override;
 
 
 };

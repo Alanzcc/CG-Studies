@@ -1,13 +1,14 @@
 #include "Sphere.hpp"
 
 
-Sphere::Sphere(double radius, Point center, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess): Object(emissive_color, ambient_color, diffuse_color, specular_color, shininess)
-{
-    this->radius = radius;
-    this->center = center;
-}
+Sphere::Sphere(double r, Point c) : radius{r}, center{c}, emissive_color{1, 1, 1}, 
+                ambient_color{1, 1, 1}, diffuse_color{1, 1, 1}, specular_color{1, 1, 1}, shininess(1) {}
 
-std::optional<IntCol> Sphere::intercept(Ray &Ray)
+Sphere::Sphere(double r, Point c, Intensity e, Intensity a, Intensity d, Intensity sp,
+                double sh) : radius{r}, center{c}, emissive_color{e}, ambient_color{a},
+                diffuse_color{d}, specular_color{sp}, shininess{sh} {}
+
+std::optional<IntCol> Sphere::intercept(const Ray &Ray) const
 {
     Vec3 w = Ray.origin - center;
     double b = 2 * w.dot(Ray.direction);
@@ -24,26 +25,13 @@ std::optional<IntCol> Sphere::intercept(Ray &Ray)
     Point intersectionPoint = Ray.origin + (Ray.direction * intersectionScalar);
 
     return std::make_pair(intersectionPoint, get_emissive_color());
-
 }
-// Fix issue with return type
-/*std::optional<std::vector<double>> Sphere::doesItIntercept(Ray Ray)
-{
-    std::vector<double> w = minusVectors(Ray.initialPoint, center);
-    double b = (2 * dotProduct(w, Ray.direction));
-    double c = dotProduct(w, w) - (this->radius * this->radius);
-    double delta = pow(b, 2) - (4 * c);
-    if (delta < 0)
-    {
-        return {};
-    }
-    double x1 = (b - sqrt(delta)) / 2;
-    double x2 = (b + sqrt(delta)) / 2;
-    double intersectionScalar = std::min(((b - sqrt(delta)) / 2), ((b + sqrt(delta)) / 2));
-    std::vector<double> intersectionPoint = plusVectors(Ray.initialPoint, multiplyByScalar(Ray.direction, intersectionScalar));
-    return intersectionPoint;
-}*/
-
+    std::optional<Vec3> get_normal(const Vec3 &intersection) const {return (intersection - center).norm();}
+    Intensity get_emissive_color() const {return emissive_color;}
+    Intensity get_ambient_color() const {return ambient_color;}
+    Intensity get_diffuse_color() const {return diffuse_color;}
+    Intensity get_specular_color() const {return specular_color;}
+    double get_shininess() const {return shininess;}
 
 
 
