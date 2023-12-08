@@ -5,28 +5,24 @@
 
 class Plane : public Object
 {
-	public:
-		Point center;
-		Vec3 normal;
-		Intensity ambient_color;
-		Intensity diffuse_color;
-		Intensity specular_color;
-		double shininess;
+public:
+	Point center;
+	Vec3 normal;
+	Intensity emissive_color;
+	Intensity ambient_color;
+	Intensity diffuse_color;
+	Intensity specular_color;
+	double shininess;
 
-		Plane(Point center, Vec3 normal, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
+	Plane(Point center, Vec3 normal, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
 
-		std::optional<IntCol> intercept(Ray &Ray) override;
-		std::optional<Vec3> get_normal (const Vec3 &intersection) override;
-		Intensity get_emissive_color() override;
-		Intensity get_ambient_color() override;
-		Intensity get_diffuse_color() override;
-		Intensity get_specular_color() override;
-		double get_shininess() override;
-
-		/*Plane(Vec3 center, Vec3 normal, Vec3 ambientReflex,
-		Vec3 diffuseReflex, Vec3 specularReflex, int shininess);
-		std::optional<Vec3>doesItIntercept(Ray Ray);
-		Vec3 Illumination(Ray Ray, Vec3 intensity);*/
+	std::optional<IntCol> intercept(const Ray& Ray) const override;
+	std::optional<Vec3>get_normal(const Point& intersection) const override;
+	Intensity get_emissive_color() const override;
+	Intensity get_ambient_color() const override;
+	Intensity get_diffuse_color() const override;
+	Intensity get_specular_color() const override;
+	double get_shininess() const override;
 };
 
 

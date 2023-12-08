@@ -12,9 +12,9 @@ public:
     Point decay;
 
 
-    Point_Light(Point origin, Vec3 direction, Intensity light_color, Point decay);
+    Point_Light(Point origin, Intensity light_color, Point decay);
     Intensity lighting(const Object& inter_obj, std::vector<Object*> objs, const IntCol& intersection, const Ray& Eye) const override;
-
+    
 };
 
 #endif

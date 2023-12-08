@@ -1,4 +1,4 @@
- #include "../include/Intensity.hpp"
+#include "Intensity.hpp"
 
 Intensity::Intensity(double r, double g, double b)
 {
@@ -9,7 +9,7 @@ Intensity::Intensity(double r, double g, double b)
 	blue = b;
 }
 
-Intensity::Intensity(const SDL_Color& rgb) : red{static_cast<double>(rgb.r) / 255.0}, green{static_cast<double>(rgb.g) 255.0}, blue{static_cast<double>(rgb.b)255.0} {}
+Intensity::Intensity(const SDL_Color& rgb) : red{ static_cast<double>(rgb.r) / 255.0 }, green{ static_cast<double>(rgb.g) / 255.0 }, blue{ static_cast<double>(rgb.b) / 255.0 } {}
 
 std::initializer_list<int> Intensity::convert_to_SDL_Color() const
 {
@@ -62,4 +62,9 @@ Intensity Intensity::operator- (const Intensity& rhs) const
 	auto new_green = std::clamp<double>(green - rhs.green, 0, 1);
 	auto new_blue = std::clamp<double>(blue - rhs.blue, 0, 1);
 	return { new_red, new_green, new_blue };
+}
+
+Intensity::operator SDL_Color() const {
+	return { static_cast<Uint8>(red * 255), static_cast<Uint8>(green * 255),
+			static_cast<Uint8>(blue * 255), 255 };
 }
