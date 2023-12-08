@@ -1,7 +1,7 @@
 
 #include "../include/Objects/Plane.hpp"
 
-Plane::Plane(std::Vec3)
+Plane::Plane(Vec3)
 
 Plane::Plane(Point center, Vec3 normal, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess):
 center(center), normal(normal), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color), shininess(shininess)
@@ -10,7 +10,7 @@ center(center), normal(normal), emissive_color(emissive_color), ambient_color(am
 
 std::optional<IntCol> Plane::intercept(Ray Ray)
 {
-    Vec3 w = center - Ray.origin);;
+    Vec3 w = (center - Ray.origin);
     double denominator = Ray.direction.dot(normal);
     if (denominator == 0)
     {
@@ -61,5 +61,4 @@ std::optional<Vec3> Plane::get_normal(const Vec3 &intersection) const
 
 //translate
 //transform
-
 

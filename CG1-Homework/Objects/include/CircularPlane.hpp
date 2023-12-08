@@ -16,7 +16,7 @@ class CircularPlane : public Plane
 		CircularPlane(double radius, Point center, Vec3 normal, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
 		
 		std::optional<IntCol> intercept(Ray &Ray) override;
-		std::optional<Vec3> get_normal (const Vec3 &intersection) override;
+		std::optional<Vec3> get_normal (const Point &intersection) override;
 		Intensity get_emissive_color() override;
 		Intensity get_ambient_color() override;
 		Intensity get_diffuse_color() override;

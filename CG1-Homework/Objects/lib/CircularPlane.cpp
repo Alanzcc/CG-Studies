@@ -2,11 +2,10 @@
 
 #include <iostream>
 
-CircularPlane::CircularPlane(double radius):
-    Plane(Point center, Vec3 normal, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess):
+CircularPlane::CircularPlane(double radius, Point center, Vec3 normal, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess):
+    Plane(center, normal, emissive_color, ambient_color, diffuse_color, specular_color, shininess),
     radius(radius)
-    {}
-
+{}
 
 std::optional<IntCol> CircularPlane::intercept(Ray Ray)
 {

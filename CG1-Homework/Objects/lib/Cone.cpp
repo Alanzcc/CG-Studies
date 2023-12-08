@@ -21,7 +21,7 @@
 //constructors
 
 Cone::Cone(double angle, double height, Point vertex, Point center_bottom, Vec3 axis, double radius, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
-    : angle(angle), height(height), vertex(vertex), axis(axis.normalize()), radius(radius), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color), shininess(shininess), center_bottom(center_bottom), bottom(radius, center_bottom, -axis) {}
+    : angle(angle), height(height), vertex(vertex), axis(axis.normalize()), radius(radius), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color), shininess(shininess), center_bottom(center_bottom), bottom(radius, center_bottom, -(axis.normalize())) {}
 
 //intercept method for cone
 std::optional<IntCol> Cone::intercept(const Ray &Ray) const {
