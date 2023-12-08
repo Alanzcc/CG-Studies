@@ -58,7 +58,7 @@ std::optional<IntCol> Cone::intercept(const Ray &Ray) const {
         else {
             return std::nullopt;
         }
-    
+    }
     //two intersections 
     double tint1 = (-b + std::sqrt(delta)) / (2 * a);
     double tint2 = (-b - std::sqrt(delta)) / (2 * a);
@@ -67,8 +67,8 @@ std::optional<IntCol> Cone::intercept(const Ray &Ray) const {
         return std::nullopt;
     }
 
-    Vec3 p1 = Ray.origin + tint1 * Ray.direction;
-    Vec3 p2 = Ray.origin + tint2 * Ray.direction;
+    //Point p1 = Ray.origin + tint1 * Ray.direction;
+    //Point p2 = Ray.origin + tint2 * Ray.direction;
 
     // it's inside the cone if 0<= (V-P) . n <= H
     double p1_projection = axis.dot(vertex - p1);
@@ -84,22 +84,41 @@ std::optional<IntCol> Cone::intercept(const Ray &Ray) const {
 
     if(tint1 >= 0 && tint2 >= 0) {
         double minT = std::min(tint1, tint2);
-        return std::makepair(Ray.origin + minT * Ray.direction, get_emissive_color());
+        //std::makepair(Ray.origin + minT * Ray.direction, get_emissive_color());
     }
 
     //check if the bottom is intercepted
-    if (bottom.has_value()) {
-        //check t 
-
+    bottom_inter = bottom->intercept(Ray);
+    if (bottom_inter.has_value()) {
+        //if the distance between the intersection point and the center of the base is greater than the radius, it's not valid
+        if(bottom->first >= 0 && (Ray.origin + bottom->first * Ray.direction - center_bottom).norm() > radius) {
+            if (bottom->first < minT) {
+                return std::make_pair(bottom->first, get_emissive_color());
+            } 
+        }      
     }
-
-
-
+    //return the closest intersection point
+    return std::make_pair(Ray.origin + minT * Ray.direction, get_emissive_color());
 }
 
+
 //get_normal method for cone
-std::optional<Vec3> Cone::get_normal(const Vec3 &intersection) const {
-    //cara, não entendi
+std::optional<Vec3> Cone::get_normal(const Point &intersection) const {
+    Vec3 normal;
+    //vector from the vertex to the intersection point
+    Vec3 vtp = intersection - vertex; //vp
+    //vector from the center of the base to the intersection point
+    Vec3 vcp = intersection - center_bottom;//v
+    //dot product of vtp and axis 
+    double vcp_dot_axis = vcp.dot(axis);
+    //calculate normal
+    //if it's less than err
+    if (auto err = 1e-12; err < vcp_dot_axis) {
+        normal = (vtp.cross(axis)).cross(vtp)
+    } else {
+        normal = -axis;
+    }
+return normal;
 }
 
 //getters 

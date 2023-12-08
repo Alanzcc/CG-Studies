@@ -36,7 +36,7 @@ class Cone : public Object
         Cone(double angle, double height, Point vertex, Vec3 axis, double radius, Intensity ambientReflex, Intensity diffuseReflex, Intensity specularReflex, int specularExponent, int shininess);
 
         std::optional<IntCol> intercept(Ray &Ray) override;
-        std::optional<Vec3> get_normal(const Vec3 &intersection);
+        std::optional<Vec3> get_normal(const Point &intersection);
         Intensity get_emissive_color() const override;
         Intensity get_ambient_color() const override;
         Intensity get_diffuse_color() const override;

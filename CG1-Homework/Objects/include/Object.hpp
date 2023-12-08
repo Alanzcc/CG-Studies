@@ -11,7 +11,7 @@
 #include "../Algebra/include/Vec3.hpp"
 #include "../Lights/include/Intensity.hpp"
 
-using IntCol = std::pair <Vec3, Intensity>;
+using IntCol = std::pair <Point, Intensity>;
 class Object
 {
 	public:

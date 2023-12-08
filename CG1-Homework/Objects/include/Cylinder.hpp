@@ -78,7 +78,7 @@ class Cylinder : public Object
         std::optional<IntCol> intercept(const Ray &Ray) const override;
         
         // getters
-        std::optional<Vec3> get_normal(const Vec3 &intersection) const override;
+        std::optional<Vec3> get_normal(const Point &intersection) const override;
         Intensity get_emissive_color() const override;
         Intensity get_ambient_color() const override;
         Intensity get_diffuse_color() const override;
