@@ -1,5 +1,5 @@
 #include "../include/cone.hpp"
-
+#include <math.h>
 //cone will need cone's vertex, axis, angle, height and radius
 //if you have centerBase, you can calculate V = C + Hn 
 // intersectionPoint a tint^2 + 2b tint + c = 0
@@ -20,5 +20,105 @@
 
 //constructors
 
-Cone::Cone(double angle, double height, Point vertex, Vec3 axis, double radius, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
-    : angle(angle), height(height), vertex(vertex), axis(axis), radius(radius), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color), shininess(shininess) {}
+Cone::Cone(double angle, double height, Point vertex, Point center_bottom, Vec3 axis, double radius, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess)
+    : angle(angle), height(height), vertex(vertex), axis(axis.normalize()), radius(radius), emissive_color(emissive_color), ambient_color(ambient_color), diffuse_color(diffuse_color), specular_color(specular_color), shininess(shininess), center_bottom(center_bottom), bottom(radius, center_bottom, -axis) {}
+
+//intercept method for cone
+std::optional<IntCol> Cone::intercept(const Ray &Ray) const {
+    //v = V - Po
+    Vec3 v = vertex - Ray.origin;
+    //coefficient of the quadratic equation
+    //d is direction?
+    // a = (d . n)^2 - (d.d) cos^2(angle)
+    // b = (v.d)cos^2(angle) - (v.n)(d.n)
+    // c = (v . n)^2 - (v.v)cos^2(angle)
+
+    //cos(angle) = tan(radius/height)
+    double angle = atan(radius / height);
+    double a = (std::pow(Ray.direction.dot(axis))) - (Ray.direction.dot(Ray.direction)) * std::pow(cos(angle));
+    double b = 2 * (v.dot(Ray.direction)) * std::pow(cos(angle)) - (v.dot(axis)) * (Ray.direction.dot(axis));
+    double c = (std::pow(v.dot(axis))) - (v.dot(v)) * std::pow(cos(angle));
+
+    //delta = b^2 - 4ac
+    double delta = std::pow(b, 2) - 4 * a * c;
+    //if delta < 0 -> no intersection
+    if (delta < 0) {
+        return std::nullopt;
+    }
+    //if delta = 0 -> one intersection
+    if (delta == 0) {
+        double tint = -b / (2 * a);
+        // it's inside the cone if 0<= (V-P) . n <= H
+        Vec3 p1 = Ray.origin + tint * Ray.direction;
+         //Pint = Po + tint d
+        p1_projection = axis.dot(vertex - p1);
+        if (p1_projection <= height) {
+            return std::makepair(p1, get_emissive_color()); //checar
+        }
+        else {
+            return std::nullopt;
+        }
+    
+    //two intersections 
+    double tint1 = (-b + std::sqrt(delta)) / (2 * a);
+    double tint2 = (-b - std::sqrt(delta)) / (2 * a);
+
+    if (tint1 < 0 || tint2 < 0) {
+        return std::nullopt;
+    }
+
+    Vec3 p1 = Ray.origin + tint1 * Ray.direction;
+    Vec3 p2 = Ray.origin + tint2 * Ray.direction;
+
+    // it's inside the cone if 0<= (V-P) . n <= H
+    double p1_projection = axis.dot(vertex - p1);
+    double p2_projection = axis.dot(vertex - p2);
+
+    if(p1_projection > height || p1_projection < 0) {
+        tint1 = -1;
+    }
+
+    if(p2_projection > height || p2_projection < 0) {
+        tint2 = -1;
+    }
+
+    if(tint1 >= 0 && tint2 >= 0) {
+        double minT = std::min(tint1, tint2);
+        return std::makepair(Ray.origin + minT * Ray.direction, get_emissive_color());
+    }
+
+    //check if the bottom is intercepted
+    if (bottom.has_value()) {
+        //check t 
+
+    }
+
+
+
+}
+
+//get_normal method for cone
+std::optional<Vec3> Cone::get_normal(const Vec3 &intersection) const {
+    //cara, não entendi
+}
+
+//getters 
+Intensity Cone::get_emissive_color() const {
+    return emissive_color;
+}
+
+Intensity Cone::get_ambient_color() const {
+    return ambient_color;
+}
+
+Intensity Cone::get_diffuse_color() const {
+    return diffuse_color;
+}
+
+Intensity Cone::get_specular_color() const {
+    return specular_color;
+}
+
+double Cone::get_shininess() const {
+    return shininess;
+}

@@ -19,9 +19,12 @@ class Cone : public Object
     public:
         double angle;
         double height;
-        Point vertex;
-        Vec3 axis;
         double radius;
+
+        Point vertex;
+        Point center_bottom;
+        Vec3 axis;
+        
         CircularPlane bottom;
 
         Intensity emissive_color;

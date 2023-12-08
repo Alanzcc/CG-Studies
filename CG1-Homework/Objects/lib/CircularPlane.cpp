@@ -1,4 +1,5 @@
 #include "../include/CircularPlane.hpp"
+
 #include <iostream>
 
 CircularPlane::CircularPlane(double radius):

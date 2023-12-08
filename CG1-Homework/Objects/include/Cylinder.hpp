@@ -42,24 +42,24 @@ class Cylinder
 #include <vector>
 #include <optional>
 #include <algorithm>
-#include "Ray.hpp"
-#include "Vec3.hpp"
 
-//#include "../Intensity.hpp"
+#include "../Algebra/include/Ray.hpp"
+#include "../Algebra/include/Point.hpp"
+#include "../Algebra/include/Vec3.hpp"
+#include "../Lights/include/Light.hpp"
 #include "../Lights/include/Intensity.hpp"
 #include "Object.hpp"
-#include "Point.hpp"
-#include "Light.hpp"
-#include "./CircularPlane.hpp"
+#include "CircularPlane.hpp"
 
 class Cylinder : public Object 
 {
     public:
         double radius;
         double height;
-        Point centerBase;
-        Point centerTop;
+
+        Point center_bottom;
         Vec3 axis;
+
         CircularPlane bottom;
         CircularPlane top;
 
@@ -68,10 +68,16 @@ class Cylinder : public Object
         Intensity diffuse_color;
         Intensity specular_color;
         double shininess;
+        
+        // constructors
+        Cylinder(double radius, double height, Point center_bottom, Vec3 axis, Intensity emissive_color,
+         Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
+        Cylinder(double radius, double height, Point center_bottom, Vec3 axis);
 
-        Cylinder(Point origin, Vec3 direction, double radius, Intensity emissive_color, Intensity ambient_color, Intensity diffuse_color, Intensity specular_color, double shininess);
-
-        std::optional<IntCol> intercept(Ray &Ray) override;
+        // check if ray intercepts the object
+        std::optional<IntCol> intercept(const Ray &Ray) const override;
+        
+        // getters
         std::optional<Vec3> get_normal(const Vec3 &intersection) const override;
         Intensity get_emissive_color() const override;
         Intensity get_ambient_color() const override;
